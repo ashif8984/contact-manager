@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-import { Link  } from "react-router-dom";
-
-
+import { Link, useLocation  } from "react-router-dom";
 import { useNavigate } from 'react-router';
 
 
 
-function AddContact (props)  {
-    console.log(props.contact);
-    const initialValues = {
-        name: "",
-        email: "",
-    }
+function EditContact (props)  {
 
-    const[values, setValues] = useState(initialValues) ;
+      const location = useLocation()
+      console.log(location.state);
+
+      const { id, name, email } = location.state.contact ;
     
-    let navigate = useNavigate();
+      const initialValues = {
+        id,
+        name,
+        email,
+        }
+      const[values, setValues] = useState(initialValues) ;
+      let navigate = useNavigate();
 
     function handleChange(e)
         {
@@ -25,19 +27,15 @@ function AddContact (props)  {
             });
         };
 
-    function add (e)  {
+    function update (e)  {
         e.preventDefault();
         if(values.name === "" || values.email === "") {
             alert("All fields are required");
             return;
         }
-
-        console.log(values.email);
-
-  
-        props.addContactHandler(values);
-        setValues({pEmail: "", pName:""});
-
+        
+        props.updateContactHandler(values);
+        setValues({email: "", name:""});
         navigate('/');
         
     }
@@ -46,15 +44,16 @@ function AddContact (props)  {
     return (
         <div className="ui main" >
   
-        <form className="ui form" onSubmit={add}>
+        <form className="ui form" onSubmit={update}>
   
-        <h2>Add Contact</h2>
+        <h2>Edit Contact</h2>
 
         <div className="field">
                 <label>Email</label>
                 <input type="email" name="email" placeholder="Email" 
                     value={values.email}
                     onChange={ handleChange }
+                    
      
                     
                 />
@@ -65,11 +64,12 @@ function AddContact (props)  {
                 <input type="text" name="name" placeholder="Name" 
                     value={values.name}
                     onChange={ handleChange }
+                    
                 />
             </div>
 
          
-                <button className="ui button blue">Add</button>
+                <button className="ui button blue">Update</button>
 
                 <Link to={'/'}>
                     <button className="ui button green">Back</button>
@@ -86,4 +86,4 @@ function AddContact (props)  {
   }
   
 
-export default AddContact;
+export default EditContact;

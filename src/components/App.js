@@ -7,9 +7,12 @@ import AddContact from "./AddContact"
 import ContactList from "./ContactList";
 import ContactDetail from "./ContactDetail";
 
+import api from "../api/contact"
 
 // import { uuid } from 'uuidv4';
 import { v4 as uuidv4 } from 'uuid';
+import EditContact from "./EditContact";
+import contact from "../api/contact";
 
 
 function App() {
@@ -30,13 +33,38 @@ function App() {
   const LOCAL_STORAAGE_KEY = "contacts";
 
 
+  const retrieveContacts = async () => {
+    const response = await api.get("/contacts");
+    return response.data; }
 
-  const addContactHandler = (contact) => {
+  const addContactHandler = async (contact) => {
     console.log(contact);
-    setContacts([...contacts, { id: uuidv4(), ...contact }]);
+
+    const request = {
+      id: uuidv4(),
+      ...contact
+    }
+    
+    const response = await api.post("/contacts", request);
+    console.log(response);
+    setContacts([...contacts, response.data]);
   };
 
-  const removeContactHandler = (id) => {
+
+  const updateContactHandler = async(contact) =>  {
+
+    const response = await api.put(`/contacts/${contact.id}`, contact);
+    console.log(response);
+    const {id, name, email} = response.data ;
+    setContacts(contacts.map((contact) => {
+      return contact.id === id ? {...response.data} : contact ;
+    })
+    )
+    }
+  
+
+  const removeContactHandler = async (id) => {
+    await api.delete(`/contacts/${id}`);
     const newContactList =  contacts.filter((contact) => {
       return contact.id !==id;
     });
@@ -44,8 +72,14 @@ function App() {
   }
 
   useEffect(() => {
-    const retrieveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAAGE_KEY))
-    if(retrieveContacts) setContacts(retrieveContacts);
+    // const retrieveContacts = JSON.parse(localStorage.getItem(LOCAL_STORAAGE_KEY))
+    // if(retrieveContacts) setContacts(retrieveContacts);
+
+    const getAllContacts = async () => {
+      const allcontacts = await retrieveContacts();
+      if (allcontacts)setContacts(allcontacts);
+    }
+    getAllContacts();
   }, []);
 
   useEffect(() => {
@@ -67,6 +101,7 @@ function App() {
 
             <Route exact path="/" element={<ContactList  contacts={contacts} getContactId={removeContactHandler} />} />  
             <Route exact path="/add" element={ <AddContact addContactHandler={addContactHandler} />} /> 
+            <Route exact path="/edit" element={ <EditContact updateContactHandler={updateContactHandler} />} /> 
             
             
             <Route exact path="/contact/:id" element={ <ContactDetail />} /> 
