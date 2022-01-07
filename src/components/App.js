@@ -30,6 +30,10 @@ function App() {
   //   ]
   
   const [contacts, setContacts ] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const [searchResults, setSearchResults ] = useState([]);
+
   const LOCAL_STORAAGE_KEY = "contacts";
 
 
@@ -61,7 +65,24 @@ function App() {
     })
     )
     }
-  
+    
+  const searchHandler = (searchTerm) =>{
+    // console.log(searchTerm);
+
+    setSearchTerm(searchTerm);
+
+    if(searchTerm !== "") {
+      const newContactList = contacts.filter((contact) => {
+        return Object.values(contact)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+      });
+      setSearchResults(newContactList);
+    }else{
+      setSearchResults(contacts);
+    }
+  };
 
   const removeContactHandler = async (id) => {
     await api.delete(`/contacts/${id}`);
@@ -99,7 +120,10 @@ function App() {
           <Routes>
 
 
-            <Route exact path="/" element={<ContactList  contacts={contacts} getContactId={removeContactHandler} />} />  
+            <Route exact path="/" element={<ContactList  contacts={searchTerm.length < 1 ? contacts: searchResults} 
+                term={searchTerm}
+                searchKeyword={searchHandler}
+                getContactId={removeContactHandler} />} />  
             <Route exact path="/add" element={ <AddContact addContactHandler={addContactHandler} />} /> 
             <Route exact path="/edit" element={ <EditContact updateContactHandler={updateContactHandler} />} /> 
             
