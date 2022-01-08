@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 function EditContact (props)  {
 
       const location = useLocation()
-      console.log(location.state);
+      //console.log(location.state);
 
       const { id, name, email } = location.state.contact ;
     
@@ -42,44 +42,56 @@ function EditContact (props)  {
   
   
     return (
-        <div className="ui main" >
-  
-        <form className="ui form" onSubmit={update}>
-  
-        <h2>Edit Contact</h2>
+        <div className="ui segment" >
 
-        <div className="field">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="Email" 
-                    value={values.email}
-                    onChange={ handleChange }
-                    
-     
-                    
-                />
-            </div>
+            <div class="ui fluid cards centered" >
+            <div class="card">
+                    <div class="content">
+            
+                    <h2 class="ui center aligned icon header">
+                    <i class="circular users icon"></i>
+                    Edit Contacts
+                    </h2>
 
-            <div className="field">
-                <label>Name</label>
-                <input type="text" name="name" placeholder="Name" 
-                    value={values.name}
-                    onChange={ handleChange }
-                    
-                />
-            </div>
+            <form className="ui form" onSubmit={update}>
+    
+                <div className="fluid wide field">
+                        <label>Name</label>
+                        <input type="text" name="name" placeholder="Name" 
+                            value={values.name}
+                            onChange={ handleChange }/>
+                </div>
 
-         
-                <button className="ui button blue">Update</button>
+                <div className="fluid wide field">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="Email" 
+                            value={values.email}
+                            onChange={ handleChange }/>
+                </div>
+
+            
+
+                <div>
+                    <button class="fluid ui green button">Update</button>
+                </div>
 
                 <Link to={'/'}>
-                    <button className="ui button green">Back</button>
+                <div style={{ marginTop:15}}>
+                    <button class="fluid ui basic red button">Cancel</button>
+                </div>
                 </Link>
-                
-  
-          
-        </form> 
 
-        
+                    
+    
+            
+            </form> 
+
+                    </div>
+
+            </div>
+            </div>
+
+
         </div>
     );
   

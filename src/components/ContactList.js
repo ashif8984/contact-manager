@@ -41,29 +41,44 @@ const ContactList = (props) => {
     return (
 
         <div className="main">
-            <h2>Contact List
-            <Link to="/add">
-                <button className="ui button right floated green">
-                <i class="plus icon"></i>
-                Add Contact</button>
-            </Link>
 
-            </h2>
-           
+        <div className="ui segment">
+            <div class="ui stackable three column grid">
+                <div class="column">
 
-            <div class="ui search" >
-          
-            <div className="ui fluid icon input" >
+                <h2>Contact List</h2>
+
+                </div>
+                <div class="column">
+                
+            
+                <div className="ui fluid icon input" >
                     <input ref={inputEl} type="text" placeholder="Search Contacts..." className="prompt"
                         value={props.term}
                         onChange={getSearchTerm}
-                     />
-                     
+                    />
+                    
                     <i className="search icon"></i>
-                </div>  
-             
+                
+            
             </div>
 
+                </div>
+                <div class="column">
+
+                    <Link to="/add">
+                        <button className="ui button right floated green">
+                        
+                        Add Contact</button>
+                    </Link>
+                </div>
+
+            </div>
+        </div>
+
+
+            
+      
 
            <div className="ui secondary segment">
             <div className="ui celled list">{renderContactList.length >0 ? renderContactList : "No Contacts Found 😕"}</div>
