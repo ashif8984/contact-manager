@@ -35,4 +35,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # custom
+Contents.md
+Version.md
 
