@@ -1,0 +1,24 @@
+{
+  "contacts": [
+    {
+      "id": "df7a4597-31a8-480d-b8d8-385af4fbe2c6",
+      "name": "David Warner",
+      "email": "david@gmail.com"
+    },
+    {
+      "id": "f5ae7b39-7e28-40fe-9657-35fb2b8cc57e",
+      "name": "MS Dhoni",
+      "email": "msdhoni@hotmail.com"
+    },
+    {
+      "id": "96902cc8-b956-4f5a-a500-ca37b8e89379",
+      "name": "Rohit Sharma",
+      "email": "rohit@outlook.com"
+    },
+    {
+      "id": "74b98dfa-a92d-4dbb-967b-ce9da28e141d",
+      "name": "Virat Kohli",
+      "email": "virat@gmail.com"
+    }
+  ]
+}
